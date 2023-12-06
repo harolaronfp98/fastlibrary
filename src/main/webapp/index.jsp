@@ -31,6 +31,7 @@
                             <strong><label class="form-label">Contraseña</label></strong>
                             <input type="password" class="form-control" id="usuario_password" name="usuario_password" required>
                         </div>
+                        <h6 class="text-danger">${message}</h6>
                         <div class="text-center my-4">
                             <button type="submit" class="my-2 btn btn-success rounded-3">Iniciar Sesión</button>
                         </div>              

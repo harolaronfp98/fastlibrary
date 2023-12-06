@@ -7,6 +7,7 @@ package com.fastlibrary.fastlibrary;
 import controlador.UsuarioControlador;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,7 +24,8 @@ import org.apache.commons.codec.digest.DigestUtils;
 public class UsuarioServlet extends HttpServlet {
 
     UsuarioControlador usuarioControlador = new UsuarioControlador();
-    int cont = 0;
+    int cont = 3;
+    String bd = "";
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -53,6 +55,7 @@ public class UsuarioServlet extends HttpServlet {
         //processRequest(request, response);
         String rule = request.getParameter("rule");
         String encryptedPassword;
+        
         if(rule.equals("registrar")){
             String usuario_codigo = request.getParameter("usuario_codigo");
             String usuario_email = request.getParameter("usuario_email");
@@ -79,22 +82,45 @@ public class UsuarioServlet extends HttpServlet {
             
             usuarioControlador.agregar(usuario);
         }else{
+            
             String email = request.getParameter("usuario_email");
             String password = request.getParameter("usuario_password");
             
             Usuario usuario = usuarioControlador.verificarUno(email);
-  
+            
             boolean passwordMatch = checkPassword(password, usuario.getPasswordDesencriptado());
-
+            if(!email.equals(bd)){
+                cont = 3;
+            }
             if(usuario != null && !usuario.getUsuarioEmail().isEmpty()){
-                if(passwordMatch && cont <= 3){
-                    cont = 0;
+                if(passwordMatch){
+                    cont = 3;
+                    
+                    request.setAttribute("email", usuario.getUsuarioEmail());
+                    request.setAttribute("celular", usuario.getUsuarioCelular());
+                    request.setAttribute("password", usuario.getUsuarioPassword());
+                    request.setAttribute("username", usuario.getUsuarioCodigo());
+
+                    String resultPage = "library/home.jsp";
+                    RequestDispatcher dispatcher = request.getRequestDispatcher(resultPage);
+                    dispatcher.forward(request, response);
+        
                     System.out.println("Contraseña correcta");
-                }else if(cont >= 3){
-                    cont = 4;
+                }else if(cont <= 1){
+                    bd = usuario.getUsuarioEmail();
+                    cont = 0;
+                    request.setAttribute("message", "Supero los 3 intentos, intentelo dentro de 1 hora");
+                    String resultPage = "index.jsp";
+                    RequestDispatcher dispatcher = request.getRequestDispatcher(resultPage);
+                    dispatcher.forward(request, response);
                     System.out.println("Contraseña incorrecta - supero 3 intentos");
                 }else{
-                    cont++;
+                    bd = usuario.getUsuarioEmail();
+                    cont--;
+                    request.setAttribute("message", "Le quedan "+cont+" intentos");
+                    String resultPage = "index.jsp";
+                    RequestDispatcher dispatcher = request.getRequestDispatcher(resultPage);
+                    dispatcher.forward(request, response);
                     System.out.println("Contraseña incorrecta - turnos: "+cont);
                 }
             }else{
