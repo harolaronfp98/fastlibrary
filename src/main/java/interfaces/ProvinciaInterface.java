@@ -4,7 +4,7 @@
  */
 package interfaces;
 
-import modelo.Provincia;
+import model.Provincia;
 
 /**
  *

@@ -6,7 +6,7 @@ package dao;
 
 import interfaces.UsuarioInterface;
 import java.util.ArrayList;
-import modelo.Usuario;
+import model.Usuario;
 
 /**
  *

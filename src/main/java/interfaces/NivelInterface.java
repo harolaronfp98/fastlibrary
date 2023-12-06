@@ -4,7 +4,7 @@
  */
 package interfaces;
 
-import modelo.Nivel;
+import model.Nivel;
 
 /**
  *

@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
 package interfaces;
-import modelo.Persona;
+import model.Persona;
 /**
  *
  * @author Harol

@@ -4,7 +4,7 @@
  */
 package interfaces;
 
-import modelo.Libro;
+import model.Libro;
 
 /**
  *

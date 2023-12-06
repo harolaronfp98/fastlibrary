@@ -4,7 +4,7 @@
  */
 package interfaces;
 
-import modelo.Departamento;
+import model.Departamento;
 
 /**
  *

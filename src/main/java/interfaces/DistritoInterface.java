@@ -4,7 +4,7 @@
  */
 package interfaces;
 
-import modelo.Distrito;
+import model.Distrito;
 
 /**
  *

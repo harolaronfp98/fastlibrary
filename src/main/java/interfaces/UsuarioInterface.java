@@ -4,7 +4,7 @@
  */
 package interfaces;
 
-import modelo.Usuario;
+import model.Usuario;
 
 /**
  *
