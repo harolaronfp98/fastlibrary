@@ -10,7 +10,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import model.Usuario;
@@ -122,6 +124,21 @@ public class UsuarioJpaController implements Serializable {
         try {
             return em.find(Usuario.class, id);
         } finally {
+            em.close();
+        }
+    }
+    
+    public Usuario findUsuarioEmail(String email) {
+        EntityManager em = getEntityManager();
+        try {
+            TypedQuery<Usuario> query = em.createQuery("SELECT u FROM Usuario u WHERE u.usuarioEmail = :email", Usuario.class);
+            query.setParameter("email", email);
+            return query.getSingleResult();
+        } catch (NoResultException ex) {
+            // Manejar la excepción cuando no se encuentra ningún resultado
+            System.out.println("ERROR - UsuarioJpaController - Usuario no encontrado");
+            return null; // o puedes lanzar una excepción personalizada, devolver un valor predeterminado, etc.
+        }finally {
             em.close();
         }
     }

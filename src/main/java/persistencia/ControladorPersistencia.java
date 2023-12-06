@@ -4,45 +4,36 @@
  */
 package persistencia;
 
-import interfaces.UsuarioInterface;
-import java.util.ArrayList;
+import java.util.List;
 import model.Usuario;
+import persistencia.exceptions.NonexistentEntityException;
 
 /**
  *
  * @author Harol
  */
-public class ControladorPersistencia implements UsuarioInterface{
+public class ControladorPersistencia{
     
     UsuarioJpaController usuarioJpaController = new UsuarioJpaController();
+    PersonaJpaController personaJpaController = new PersonaJpaController();
 
-    @Override
-    public boolean agregar(Usuario data) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void agregarUsuario(Usuario t) {
+        usuarioJpaController.create(t);
     }
 
-    @Override
-    public boolean eliminar(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public List<Usuario> listarUsuarios() {
+        return usuarioJpaController.findUsuarioEntities();
     }
-
-    @Override
-    public boolean modificar(Usuario data) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    
+    public Usuario buscarUno(String email){
+        return usuarioJpaController.findUsuarioEmail(email);
     }
-
-    @Override
-    public ArrayList<Usuario> listarTodos() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public Usuario listarUno(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    @Override
-    public Usuario verificarUno(String email) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    
+    public void eliminarUsuario(Integer id){
+        try{
+            usuarioJpaController.destroy(id);
+        }catch(NonexistentEntityException ex){
+            System.out.println("ERROR - ControladorPersistencia: "+ex);
+        }
     }
 }

@@ -4,7 +4,7 @@
  */
 package interfaces;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -13,10 +13,10 @@ import java.util.ArrayList;
  */
 public interface CRUD<T> {
     
-    public boolean agregar(T data);
-    public boolean eliminar(int id);
-    public boolean modificar(T data);
-    public ArrayList<T> listarTodos();
+    public void agregar(T data);
+    public void eliminar(Integer id);
+    public void modificar(T data);
+    public List<T> listarTodos();
     public T listarUno(int id);
     public T verificarUno(String email);
     
