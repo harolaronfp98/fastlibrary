@@ -37,7 +37,7 @@
                         </div>
                         <div class="form-group px-4 py-2">
                             <strong><label class="form-label">Telefono fijo</label></strong>
-                            <input id="usuario_fijo" name="usuario_fijo" class="form-control" type="text" required>
+                            <input id="usuario_fijo" name="usuario_fijo" class="form-control" type="text">
                         </div>
                         <div class="form-group px-4 py-2">
                             <strong><label class="form-label">DNI</label></strong>

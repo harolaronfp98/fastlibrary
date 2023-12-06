@@ -4,7 +4,27 @@
     Author     : Harol
 --%>
 
+<%@page import="model.Usuario"%>
+<%@page import="controlador.UsuarioControlador"%>
+<%@page import="java.io.UnsupportedEncodingException"%>
+<%@page import="java.net.URLDecoder"%>
+<%@page import="model.Libro"%>
+<%@page import="java.util.List"%>
+<%@page import="controlador.LibroControlador"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%
+    Cookie[] cookies = request.getCookies();
+
+   String userId = "";
+   if (cookies != null) {
+       for (Cookie cookie : cookies) {
+           if (cookie.getName().equals("userEmail")) {
+               userId = cookie.getValue();
+               break;
+           }
+       }
+   }
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -13,14 +33,20 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     </head>
     <body>
+        <%
+            UsuarioControlador usuarioControlador = new UsuarioControlador();
+            Usuario usuario = new Usuario();
+            usuario = usuarioControlador.verificarUno(userId);
+        %>
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container-fluid">
                     <div class="d-flex">
                         <a href="home.xhtml"><img src="${pageContext.request.contextPath}/resource/favicon.png" class="rounded" width="80px" height="80px" alt="..."></img></a>
                         <div class="m-2">
-                            <h6 style="font-size: 12px">Correo: ${email}</h6>
-                            <h6 style="font-size: 12px">Código: ${username}</h6>
+
+                            <h6 style="font-size: 12px">Correo: <%= userId %></h6>
+                            <h6 style="font-size: 12px">Código: <%= usuario.getUsuarioCodigo() %></h6>
                             <h6 style="font-size: 12px">Estado: Activo</h6>
                         </div>
                     </div>
@@ -31,7 +57,7 @@
                     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                         <div class="navbar-nav">
                             <a class="nav-link border-bottom text-dark" href="#">Configuración</a>
-                            <a class="nav-link border-bottom text-dark" href="index.jsp">Cerrar Sesión</a>
+                            <a class="nav-link border-bottom text-dark" href="../index.jsp">Cerrar Sesión</a>
                         </div>
                     </div>
                 </div>
@@ -50,26 +76,26 @@
                         </div>
                     </form>
                 </div>
+                <%
+                    LibroControlador libroControlador = new LibroControlador();
+                    List<Libro> lista = libroControlador.listarTodos();
+                %>
                 <div class="my-2">
+                    <%for(int i=0; i<lista.size(); i++){%>
                     <div class="d-flex justify-content-between border p-1">
                         <div class="d-flex">
                             <img src="${pageContext.request.contextPath}/resource/favicon.png" class="rounded" width="80px" height="80px" alt="..."></img>
                             <div class="m-2">
-                                <h6 style="font-size: 12px">${username}</h6>
-                                <h6 style="font-size: 12px">${password}</h6>
-                                <h6 style="font-size: 12px">${email}</h6>
-                                <h6 style="font-size: 12px">${celular}</h6>
-                                <h6 style="font-size: 12px">Destino: Av.Universitaria 1536</h6>
+                                <h6 style="font-size: 12px">Nombre: <%=lista.get(i).getAutornombreLibro()%></h6>
+                                <h6 style="font-size: 12px">Autor: <%=lista.get(i).getAutorapepaterLibro()+" "+lista.get(i).getAutorapematerLibro()%></h6>
+                                <h6 style="font-size: 12px">Año: <%=lista.get(i).getAniopublLibro()%></h6>
                             </div>
-                        </div>
-                        <div class="m-2">
-                            <h6 style="font-size: 12px">Estado: Preparación</h6>
-                            <h6 style="font-size: 12px">Tiempo: 48min</h6>
                         </div>
                         <div class="my-4">
                             <a href=""><img src="${pageContext.request.contextPath}/resource/ojo.png" class="rounded mx-2" width="30px" height="30px" alt="vista"></img></a>
                         </div>
                     </div>
+                    <%}%>
                 </div>     
             </section>
         </div>

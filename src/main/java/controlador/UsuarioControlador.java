@@ -14,6 +14,7 @@ import persistencia.ControladorPersistencia;
  * @author Harol
  */
 public class UsuarioControlador implements UsuarioInterface{
+    
     ControladorPersistencia controladorPersistencia = new ControladorPersistencia();
 
     @Override
@@ -27,8 +28,8 @@ public class UsuarioControlador implements UsuarioInterface{
     }
 
     @Override
-    public Usuario listarUno(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public Usuario listarUno(Integer id) {
+        return controladorPersistencia.buscarUsuario(id);
     }
 
     @Override

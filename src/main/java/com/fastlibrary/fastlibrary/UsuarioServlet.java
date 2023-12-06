@@ -4,15 +4,21 @@
  */
 package com.fastlibrary.fastlibrary;
 
+import controlador.LibroControlador;
 import controlador.UsuarioControlador;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import model.Libro;
 import model.Usuario;
 import org.apache.commons.codec.digest.DigestUtils;
 
@@ -24,6 +30,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 public class UsuarioServlet extends HttpServlet {
 
     UsuarioControlador usuarioControlador = new UsuarioControlador();
+    LibroControlador libroControlador = new LibroControlador();
     int cont = 3;
     String bd = "";
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -77,10 +84,11 @@ public class UsuarioServlet extends HttpServlet {
             
             usuario.setIdNivel(1);
             usuario.setIdDistrito(1);
-            usuario.setIdPersona(1);
             usuario.setEstado(1);
             
             usuarioControlador.agregar(usuario);
+            
+            response.sendRedirect("index.jsp");
         }else{
             
             String email = request.getParameter("usuario_email");
@@ -96,15 +104,26 @@ public class UsuarioServlet extends HttpServlet {
                 if(passwordMatch){
                     cont = 3;
                     
-                    request.setAttribute("email", usuario.getUsuarioEmail());
+                    Cookie userEmail = new Cookie("userEmail", usuario.getUsuarioEmail());
+                    
+                    userEmail.setMaxAge(1800);
+                    
+                    response.addCookie(userEmail);
+                    
+                    /*request.setAttribute("email", usuario.getUsuarioEmail());
                     request.setAttribute("celular", usuario.getUsuarioCelular());
                     request.setAttribute("password", usuario.getUsuarioPassword());
                     request.setAttribute("username", usuario.getUsuarioCodigo());
 
                     String resultPage = "library/home.jsp";
                     RequestDispatcher dispatcher = request.getRequestDispatcher(resultPage);
-                    dispatcher.forward(request, response);
-        
+                    dispatcher.forward(request, response);*/
+                    if(usuario.getIdNivel() == 3){
+                        response.sendRedirect("admin/home.jsp");
+                    }else{
+                        response.sendRedirect("library/home.jsp");
+                    }
+                    
                     System.out.println("Contraseña correcta");
                 }else if(cont <= 1){
                     bd = usuario.getUsuarioEmail();

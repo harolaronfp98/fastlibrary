@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.Persistence;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import model.Prestamo;
@@ -28,6 +29,10 @@ public class PrestamoJpaController implements Serializable {
 
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
+    }
+    
+    public PrestamoJpaController(){
+        emf = Persistence.createEntityManagerFactory("conexionPU");
     }
 
     public void create(Prestamo prestamo) {

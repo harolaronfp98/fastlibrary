@@ -17,7 +17,7 @@ public interface CRUD<T> {
     public void eliminar(Integer id);
     public void modificar(T data);
     public List<T> listarTodos();
-    public T listarUno(int id);
+    public T listarUno(Integer id);
     public T verificarUno(String email);
     
 }

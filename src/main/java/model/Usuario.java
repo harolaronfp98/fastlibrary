@@ -47,10 +47,8 @@ public class Usuario implements Serializable {
     @Basic(optional = false)
     @Column(name = "id_usuario")
     private Integer idUsuario;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "id_persona")
-    private int idPersona;
+    private Integer idPersona;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 25)
@@ -81,9 +79,7 @@ public class Usuario implements Serializable {
     @Size(min = 1, max = 15)
     @Column(name = "usuario_celular")
     private String usuarioCelular;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 15)
+    @Size(max = 15)
     @Column(name = "usuario_fijo")
     private String usuarioFijo;
     @Basic(optional = false)
@@ -107,16 +103,14 @@ public class Usuario implements Serializable {
         this.idUsuario = idUsuario;
     }
 
-    public Usuario(Integer idUsuario, int idPersona, String usuarioCodigo, String usuarioPassword, String passwordDesencriptado, int idNivel, String usuarioEmail, String usuarioCelular, String usuarioFijo, String usuarioNumdoc, int idDistrito, int estado) {
+    public Usuario(Integer idUsuario, String usuarioCodigo, String usuarioPassword, String passwordDesencriptado, int idNivel, String usuarioEmail, String usuarioCelular, String usuarioNumdoc, int idDistrito, int estado) {
         this.idUsuario = idUsuario;
-        this.idPersona = idPersona;
         this.usuarioCodigo = usuarioCodigo;
         this.usuarioPassword = usuarioPassword;
         this.passwordDesencriptado = passwordDesencriptado;
         this.idNivel = idNivel;
         this.usuarioEmail = usuarioEmail;
         this.usuarioCelular = usuarioCelular;
-        this.usuarioFijo = usuarioFijo;
         this.usuarioNumdoc = usuarioNumdoc;
         this.idDistrito = idDistrito;
         this.estado = estado;
@@ -130,11 +124,11 @@ public class Usuario implements Serializable {
         this.idUsuario = idUsuario;
     }
 
-    public int getIdPersona() {
+    public Integer getIdPersona() {
         return idPersona;
     }
 
-    public void setIdPersona(int idPersona) {
+    public void setIdPersona(Integer idPersona) {
         this.idPersona = idPersona;
     }
 

@@ -5,6 +5,7 @@
 package persistencia;
 
 import java.util.List;
+import model.Libro;
 import model.Usuario;
 import persistencia.exceptions.NonexistentEntityException;
 
@@ -16,6 +17,8 @@ public class ControladorPersistencia{
     
     UsuarioJpaController usuarioJpaController = new UsuarioJpaController();
     PersonaJpaController personaJpaController = new PersonaJpaController();
+    LibroJpaController libroJpaController = new LibroJpaController();
+    PrestamoJpaController prestamoJpaController = new PrestamoJpaController();
 
     public void agregarUsuario(Usuario t) {
         usuarioJpaController.create(t);
@@ -23,6 +26,10 @@ public class ControladorPersistencia{
 
     public List<Usuario> listarUsuarios() {
         return usuarioJpaController.findUsuarioEntities();
+    }
+    
+    public Usuario buscarUsuario(Integer id){
+        return usuarioJpaController.findUsuario(id);
     }
     
     public Usuario buscarUno(String email){
@@ -35,5 +42,9 @@ public class ControladorPersistencia{
         }catch(NonexistentEntityException ex){
             System.out.println("ERROR - ControladorPersistencia: "+ex);
         }
+    }
+    
+    public List<Libro> listarLibros() {
+        return libroJpaController.findLibroEntities();
     }
 }
