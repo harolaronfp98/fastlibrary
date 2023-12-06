@@ -46,12 +46,12 @@ public class Libro implements Serializable {
     private Integer idLibro;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 15)
+    @Size(min = 1, max = 100)
     @Column(name = "codigo_libro")
     private String codigoLibro;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 4)
+    @Size(min = 1, max = 12)
     @Column(name = "aniopubl_libro")
     private String aniopublLibro;
     @Basic(optional = false)

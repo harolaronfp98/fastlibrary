@@ -4,7 +4,7 @@
  */
 package com.fastlibrary.fastlibrary;
 
-import java.io.PrintWriter;
+import controlador.LibroControlador;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,14 +16,19 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.annotation.MultipartConfig;
+import model.Libro;
 
 /**
  *
  * @author Harol
  */
 @WebServlet(name = "LibroServlet", urlPatterns = {"/libro"})
+@MultipartConfig
 public class LibroServlet extends HttpServlet {
-
+    
+    LibroControlador libroControlador = new LibroControlador();
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -52,25 +57,52 @@ public class LibroServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        /*String uploadDirectory = getServletContext().getRealPath("/resource");
-
+        String titulo = request.getParameter("autornombre_libro");
+        String nombre_autor = request.getParameter("autorapepater_libro");
+        String apellido_autor = request.getParameter("autorapemater_libro");
+        String fecha = request.getParameter("aniopubl_libro");
+        String editorial = request.getParameter("editorial_libro");
+        
+        String uploadDirectory = getServletContext().getRealPath("/resource");
         Path uploadPath = Path.of(uploadDirectory);
         if (!Files.exists(uploadPath)) {
             Files.createDirectories(uploadPath);
         }
         
-        try (InputStream input = request.getPart("file").getInputStream()) {
+        try {
+            InputStream input = request.getPart("file").getInputStream();
+            InputStream imagen = request.getPart("editorial_libro").getInputStream();
             String fileName = request.getPart("file").getSubmittedFileName();
-
+            String imagenName = request.getPart("editorial_libro").getSubmittedFileName();
+            
+            Path fileImagePath = uploadPath.resolve(imagenName);
+            Files.copy(imagen, fileImagePath, StandardCopyOption.REPLACE_EXISTING);
+            
             Path filePath = uploadPath.resolve(fileName);
             Files.copy(input, filePath, StandardCopyOption.REPLACE_EXISTING);
 
-            System.out.println("Archivo subido con éxito:"+ fileName);
-            response.getWriter().println("Archivo subido con éxito: " + fileName);
+            String ruta = uploadPath+"\\"+fileName;
+            System.out.println("Archivo subido con éxito: "+ruta);
+            
+            Libro libro = new Libro();
+            libro.setAutornombreLibro(titulo);
+            libro.setAutorapepaterLibro(nombre_autor);
+            libro.setAutorapematerLibro(apellido_autor);
+            libro.setAniopublLibro(fecha);
+            libro.setEditorialLibro(editorial);
+            libro.setCodigoLibro(fileName);
+            libro.setDistritopublLibro(imagenName);
+            libro.setEstado(1);
+            
+            libroControlador.agregar(libro);
+            request.setAttribute("message", "Archivo subido con éxito: " + uploadPath+"\\"+fileName);
+            String resultPage = "admin/home.jsp";
+            RequestDispatcher dispatcher = request.getRequestDispatcher(resultPage);
+            dispatcher.forward(request, response);
         } catch (Exception e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             System.out.println("Error al subir el archivo:"+ e.getMessage());
-        }*/
+        }
         
     }
 

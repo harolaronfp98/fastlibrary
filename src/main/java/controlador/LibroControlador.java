@@ -19,7 +19,7 @@ public class LibroControlador implements LibroInterface{
 
     @Override
     public void agregar(Libro t) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        controladorPersistencia.agregarLibro(t);
     }
 
     @Override

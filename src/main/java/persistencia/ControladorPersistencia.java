@@ -44,6 +44,10 @@ public class ControladorPersistencia{
         }
     }
     
+    public void agregarLibro(Libro t) {
+        libroJpaController.create(t);
+    }
+    
     public List<Libro> listarLibros() {
         return libroJpaController.findLibroEntities();
     }

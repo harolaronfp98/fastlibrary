@@ -82,7 +82,7 @@
                     <%for(int i=0; i<lista.size(); i++){%>
                     <div class="d-flex justify-content-between border p-1">
                         <div class="d-flex">
-                            <img src="${pageContext.request.contextPath}/resource/favicon.png" class="rounded" width="80px" height="80px" alt="..."></img>
+                            <img src="${pageContext.request.contextPath}/resource/<%=lista.get(i).getDistritopublLibro()%>" class="rounded" width="80px" height="80px" alt="..."></img>
                             <div class="m-2">
                                 <h6 style="font-size: 12px">Nombre: <%=lista.get(i).getAutornombreLibro()%></h6>
                                 <h6 style="font-size: 12px">Autor: <%=lista.get(i).getAutorapepaterLibro()+" "+lista.get(i).getAutorapematerLibro()%></h6>
@@ -90,7 +90,7 @@
                             </div>
                         </div>
                         <div class="my-4">
-                            <a href=""><img src="${pageContext.request.contextPath}/resource/ojo.png" class="rounded mx-2" width="30px" height="30px" alt="vista"></img></a>
+                            <a href="${pageContext.request.contextPath}/resource/<%=lista.get(i).getCodigoLibro()%>" target="_blank"><img src="${pageContext.request.contextPath}/resource/ojo.png" class="rounded mx-2" width="30px" height="30px" alt="vista"></img></a>
                         </div>
                     </div>
                     <%}%>

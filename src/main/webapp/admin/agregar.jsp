@@ -61,7 +61,11 @@
                     <div class="col-md-6 shadow p-3 mb-5 bg-body rounded-3">
                         <h1 class="text-center my-4">FastLibrary</h1>
                         <h2 class="text-center my-4">Registro de Libro</h2>
-                        <form action="libro" method="post" enctype="multipart/form-data">
+                        <form action="../libro" method="post" enctype="multipart/form-data">
+                            <div class="form-group px-4 py-2">
+                                <strong><label class="form-label">Imagen de Libro</label></strong>
+                                <input id="editorial_libro" name="editorial_libro" class="form-control form-control-sm" type="file" accept=".jpg .jpeg .png" required>
+                            </div>
                             <div class="form-group px-4 py-2">
                                 <strong><label class="form-label">Titulo</label></strong>
                                 <input id="autornombre_libro" name="autornombre_libro" class="form-control" type="text" required>
@@ -72,7 +76,7 @@
                             </div>
                             <div class="form-group px-4 py-2">
                                 <strong><label class="form-label">Apellidos del autor</label></strong>
-                                <input id="autorapemater_libro" name="autorapemater_libro" class="form-control" type="email" required>
+                                <input id="autorapemater_libro" name="autorapemater_libro" class="form-control" type="text" required>
                             </div>
                             <div class="form-group px-4 py-2">
                                 <strong><label class="form-label">Año</label></strong>
@@ -86,6 +90,7 @@
                                 <strong><label class="form-label">Subir Libro</label></strong>
                                 <input class="form-control form-control-sm" id="file" name="file" type="file" accept=".pdf" required>
                             </div>
+                            <h6 class="text-success">${message}</h6>
                             <div class="text-center my-4">
                                 <button type="submit" class="my-2 btn btn-success rounded-3">Añadir</button>
                             </div>              
