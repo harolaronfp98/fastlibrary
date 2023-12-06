@@ -96,11 +96,11 @@ public class UsuarioServlet extends HttpServlet {
             
             Usuario usuario = usuarioControlador.verificarUno(email);
             
-            boolean passwordMatch = checkPassword(password, usuario.getPasswordDesencriptado());
             if(!email.equals(bd)){
                 cont = 3;
             }
             if(usuario != null && !usuario.getUsuarioEmail().isEmpty()){
+                boolean passwordMatch = checkPassword(password, usuario.getPasswordDesencriptado());
                 if(passwordMatch){
                     cont = 3;
                     
@@ -143,6 +143,10 @@ public class UsuarioServlet extends HttpServlet {
                     System.out.println("Contraseña incorrecta - turnos: "+cont);
                 }
             }else{
+                request.setAttribute("message", "Usuario no Encontrado");
+                    String resultPage = "index.jsp";
+                    RequestDispatcher dispatcher = request.getRequestDispatcher(resultPage);
+                    dispatcher.forward(request, response);
                 System.out.println("UsuarioServlet: Usuario no Encontrado");
             }
             
