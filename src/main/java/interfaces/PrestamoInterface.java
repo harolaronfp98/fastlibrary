@@ -9,5 +9,5 @@ import model.Prestamo;
  * @author Harol
  */
 public interface PrestamoInterface extends CRUD<Prestamo>{
-    
+     
 }

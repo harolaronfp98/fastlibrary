@@ -3,9 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
 package interfaces;
-
 import model.Libro;
-
 /**
  *
  * @author Harol

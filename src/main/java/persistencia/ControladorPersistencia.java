@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package dao;
+package persistencia;
 
 import interfaces.UsuarioInterface;
 import java.util.ArrayList;
@@ -12,7 +12,9 @@ import model.Usuario;
  *
  * @author Harol
  */
-public class UsuarioDao implements UsuarioInterface{
+public class ControladorPersistencia implements UsuarioInterface{
+    
+    UsuarioJpaController usuarioJpaController = new UsuarioJpaController();
 
     @Override
     public boolean agregar(Usuario data) {
@@ -43,5 +45,4 @@ public class UsuarioDao implements UsuarioInterface{
     public Usuario verificarUno(String email) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
 }
