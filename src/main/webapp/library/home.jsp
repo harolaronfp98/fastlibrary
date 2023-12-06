@@ -19,8 +19,8 @@
                     <div class="d-flex">
                         <a href="home.xhtml"><img src="${pageContext.request.contextPath}/resource/favicon.png" class="rounded" width="80px" height="80px" alt="..."></img></a>
                         <div class="m-2">
-                            <h6 style="font-size: 12px">Usuario: hfigueroa</h6>
-                            <h6 style="font-size: 12px">Código: h1548e</h6>
+                            <h6 style="font-size: 12px">Correo: ${email}</h6>
+                            <h6 style="font-size: 12px">Código: ${username}</h6>
                             <h6 style="font-size: 12px">Estado: Activo</h6>
                         </div>
                     </div>
