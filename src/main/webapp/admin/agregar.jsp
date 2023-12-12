@@ -37,7 +37,7 @@
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container-fluid">
                     <div class="d-flex">
-                        <a href="home.xhtml"><img src="${pageContext.request.contextPath}/resource/favicon.png" class="rounded" width="80px" height="80px" alt="..."></img></a>
+                        <a href="home.jsp"><img src="${pageContext.request.contextPath}/resource/favicon.png" class="rounded" width="80px" height="80px" alt="..."></img></a>
                         <div class="m-2">
 
                             <h6 style="font-size: 12px">Correo: <%= userId %></h6>

@@ -39,12 +39,17 @@ public class LibroControlador implements LibroInterface{
 
     @Override
     public Libro listarUno(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return controladorPersistencia.listarUnLibro(id);
     }
 
     @Override
     public Libro verificarUno(String email) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public List<Libro> listarTodosPor(String titulo, String autor) {
+        return controladorPersistencia.listarLibrosPor(titulo, autor);
     }
     
 }

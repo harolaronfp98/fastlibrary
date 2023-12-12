@@ -11,6 +11,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import model.Libro;
@@ -134,6 +135,19 @@ public class LibroJpaController implements Serializable {
             cq.select(em.getCriteriaBuilder().count(rt));
             Query q = em.createQuery(cq);
             return ((Long) q.getSingleResult()).intValue();
+        } finally {
+            em.close();
+        }
+    }
+    
+    public List<Libro> buscarLibros(String titulo, String autor) {
+        EntityManager em = getEntityManager();
+        try {
+            String jpql = "SELECT l FROM Libro l WHERE l.autornombreLibro LIKE :titulo AND l.autorapepaterLibro LIKE :autor";
+            TypedQuery<Libro> query = em.createQuery(jpql, Libro.class);
+            query.setParameter("titulo", "%" + titulo + "%");
+            query.setParameter("autor", "%" + autor + "%");
+            return query.getResultList();
         } finally {
             em.close();
         }

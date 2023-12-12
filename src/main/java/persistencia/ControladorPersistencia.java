@@ -51,4 +51,12 @@ public class ControladorPersistencia{
     public List<Libro> listarLibros() {
         return libroJpaController.findLibroEntities();
     }
+    
+    public List<Libro> listarLibrosPor(String titulo , String autor) {
+        return libroJpaController.buscarLibros(titulo, autor);
+    }
+    
+    public Libro listarUnLibro(Integer id) {
+        return libroJpaController.findLibro(id);
+    }
 }

@@ -37,17 +37,21 @@
             UsuarioControlador usuarioControlador = new UsuarioControlador();
             Usuario usuario = new Usuario();
             usuario = usuarioControlador.verificarUno(userId);
+            String nivel = "Free";
+            if(usuario.getIdNivel() == 2){
+                nivel = "Premium";
+            }
         %>
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container-fluid">
                     <div class="d-flex">
-                        <a href="home.xhtml"><img src="${pageContext.request.contextPath}/resource/favicon.png" class="rounded" width="80px" height="80px" alt="..."></img></a>
+                        <a href="home.jsp"><img src="${pageContext.request.contextPath}/resource/favicon.png" class="rounded" width="80px" height="80px" alt="..."></img></a>
                         <div class="m-2">
 
                             <h6 style="font-size: 12px">Correo: <%= userId %></h6>
                             <h6 style="font-size: 12px">Código: <%= usuario.getUsuarioCodigo() %></h6>
-                            <h6 style="font-size: 12px">Estado: Activo</h6>
+                            <h6 style="font-size: 12px">Estado: <%= nivel %></h6>
                         </div>
                     </div>
                     
@@ -56,6 +60,7 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                         <div class="navbar-nav">
+                            <a class="nav-link border-bottom text-dark" href="cambiar.jsp">Cambiar a Premium</a>
                             <a class="nav-link border-bottom text-dark" href="#">Configuración</a>
                             <a class="nav-link border-bottom text-dark" href="../index.jsp">Cerrar Sesión</a>
                         </div>
@@ -67,22 +72,30 @@
                     <h6 class="my-2" style="font-size: 14px">Libros: </h6>
                     <form class="d-flex">
                         <div class="input-group mx-2">
-                            <span class="input-group-text" id="basic-addon1">@</span>
-                            <input type="text" class="form-control" placeholder="Titulo" aria-label="titulo" aria-describedby="basic-addon1">
+                            <span class="input-group-text" id="basic-addon1"><img src="${pageContext.request.contextPath}/resource/libro.png" alt="libro" width="20px" height="20px"></span>
+                            <input type="text" class="form-control" placeholder="Titulo" aria-label="titulo" aria-describedby="basic-addon1" name="titulo">
                         </div>
                         <div class="input-group">
-                            <span class="input-group-text" id="basic-addon1">@</span>
-                            <input type="text" class="form-control" placeholder="Autor" aria-label="autor" aria-describedby="basic-addon1">
+                            <span class="input-group-text" id="basic-addon1"><img src="${pageContext.request.contextPath}/resource/autor.png" alt="autor" width="20px" height="20px"></span>
+                            <input type="text" class="form-control" placeholder="Autor" aria-label="autor" aria-describedby="basic-addon1" name="autor">
                         </div>
+                            <button type="submit" class="bg-transparent border-0"><img src="${pageContext.request.contextPath}/resource/lupa.png" alt="lupa" width="20px" height="20px"></button>
                     </form>
                 </div>
                 <%
                     LibroControlador libroControlador = new LibroControlador();
+                    String titulo = request.getParameter("titulo");
+                    String autor = request.getParameter("autor");
                     List<Libro> lista = libroControlador.listarTodos();
+                    if((titulo != null && !titulo.isEmpty()) || (autor != null && !autor.isEmpty())){
+                        lista = libroControlador.listarTodosPor(titulo, autor);
+                    }
+                    
                 %>
                 <div class="my-2">
-                    <%for(int i=0; i<lista.size(); i++){%>
-                    <div class="d-flex justify-content-between border p-1">
+                    <%for(int i=0; i<lista.size(); i++){
+                    if(lista.get(i).getEstado() <= usuario.getIdNivel()){%>
+                    <div class="d-flex justify-content-between border p-1 mt-2">
                         <div class="d-flex">
                             <img src="${pageContext.request.contextPath}/resource/<%=lista.get(i).getDistritopublLibro()%>" class="rounded" width="80px" height="80px" alt="..."></img>
                             <div class="m-2">
@@ -92,10 +105,14 @@
                             </div>
                         </div>
                         <div class="my-4">
-                            <a href="${pageContext.request.contextPath}/resource/<%=lista.get(i).getCodigoLibro()%>" target="_blank"><img src="${pageContext.request.contextPath}/resource/ojo.png" class="rounded mx-2" width="30px" height="30px" alt="vista"></img></a>
+                            <form action="../view/libro.jsp" method="get">
+                                <input type="hidden" name="id" value="<%=lista.get(i).getIdLibro()%>">
+                                <button class="bg-transparent border-0" type="submit"><img src="${pageContext.request.contextPath}/resource/ojo.png" class="rounded mx-2" width="30px" height="30px" alt="vista"></button>
+                            </form>
+                            <!--<a href="${pageContext.request.contextPath}/resource/<%=lista.get(i).getCodigoLibro()%>" target="_blank"><img src="${pageContext.request.contextPath}/resource/ojo.png" class="rounded mx-2" width="30px" height="30px" alt="vista"></img></a>-->
                         </div>
                     </div>
-                    <%}%>
+                    <%}}%>
                 </div>     
             </section>
         </div>
