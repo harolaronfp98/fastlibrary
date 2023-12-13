@@ -45,7 +45,7 @@
 
                             <h6 style="font-size: 12px">Correo: <%= userId %></h6>
                             <h6 style="font-size: 12px">Código: <%= usuario.getUsuarioCodigo() %></h6>
-                            <h6 style="font-size: 12px">Estado: Activo</h6>
+                            <h6 style="font-size: 12px">Estado: Administrador</h6>
                         </div>
                     </div>
                     
@@ -63,21 +63,26 @@
             <section class="m-3">
                 <div class="d-flex justify-content-between">
                     <h6 class="my-2" style="font-size: 14px">Libros: </h6>
-                    <form action="home.jsp" method="get" class="d-flex">
+                    <form class="d-flex">
                         <div class="input-group mx-2">
-                            <span class="input-group-text" id="basic-addon1">@</span>
+                            <span class="input-group-text" id="basic-addon1"><img src="${pageContext.request.contextPath}/resource/libro.png" alt="libro" width="20px" height="20px"></span>
                             <input type="text" class="form-control" placeholder="Titulo" aria-label="titulo" aria-describedby="basic-addon1" name="titulo">
                         </div>
                         <div class="input-group">
-                            <span class="input-group-text" id="basic-addon1">@</span>
+                            <span class="input-group-text" id="basic-addon1"><img src="${pageContext.request.contextPath}/resource/autor.png" alt="autor" width="20px" height="20px"></span>
                             <input type="text" class="form-control" placeholder="Autor" aria-label="autor" aria-describedby="basic-addon1" name="autor">
                         </div>
+                            <button type="submit" class="bg-transparent border-0"><img src="${pageContext.request.contextPath}/resource/lupa.png" alt="lupa" width="20px" height="20px"></button>
                     </form>
                 </div>
                 <%
                     LibroControlador libroControlador = new LibroControlador();
-                    
+                    String titulo = request.getParameter("titulo");
+                    String autor = request.getParameter("autor");
                     List<Libro> lista = libroControlador.listarTodos();
+                    if((titulo != null && !titulo.isEmpty()) || (autor != null && !autor.isEmpty())){
+                        lista = libroControlador.listarTodosPor(titulo, autor);
+                    }
                 %>
                 <div class="my-2">
                     <%for(int i=0; i<lista.size(); i++){%>
